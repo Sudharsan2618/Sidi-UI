@@ -18,7 +18,7 @@
 //   // Fetch the country data from the API
 //   const fetchCountry = async (country) => {
 //     try {
-//       const response = await fetch(`https://lms-be-sqpa.onrender.comapi/populationData`, {
+//       const response = await fetch(`https://lms-be-sqpa.onrender.com/api/populationData`, {
 //         method: 'POST',
 //         headers: {
 //           'Content-Type': 'application/json',
@@ -201,7 +201,7 @@ const MapComponent = ({ mapName, mapKey, data, onMapChange }) => {
   // Fetch the country data from the API
   const fetchCountry = async (country) => {
     try {
-      const response = await fetch(`https://lms-be-sqpa.onrender.comapi/populationData`, {
+      const response = await fetch(`https://lms-be-sqpa.onrender.com/api/populationData`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
