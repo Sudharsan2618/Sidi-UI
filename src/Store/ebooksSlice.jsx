@@ -6,7 +6,7 @@ export const fetchBooks = createAsyncThunk(
     "ebooks/fetchBooks",
     async (_, { rejectWithValue }) => {
         try {
-            const response = await api.get(`https://lms-be-do05.onrender.com/api/ebooks`);
+            const response = await api.get(`https://sidi-be.onrender.com/api/ebooks`);
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || "An error occurred");
