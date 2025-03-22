@@ -7,7 +7,7 @@ export const fetchCourses = createAsyncThunk(
   "courses/fetchCourses",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get("https://sidi-be.onrender.com/api/course-master");
+      const response = await api.get("https://lms-be-sqpa.onrender.comapi/course-master");
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "An error occurred");
@@ -20,7 +20,7 @@ export const fetchCourseDetails = createAsyncThunk(
   "courses/fetchCourseDetails",
   async (courseId, { rejectWithValue }) => {
     try {
-      const response = await api.post("https://sidi-be.onrender.com/api/course/enrollment_details", {
+      const response = await api.post("https://lms-be-sqpa.onrender.comapi/course/enrollment_details", {
         course_id: courseId,
       });
       return response.data;
