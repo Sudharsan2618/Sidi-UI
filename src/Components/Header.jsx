@@ -148,6 +148,7 @@ const Header = () => {
     }, []);
 
     const handleLogout = () => {
+        dispatch(logout())
         localStorage.removeItem("user");
         localStorage.removeItem("hasCompletedQuestions");
         navigate("/login");
@@ -188,12 +189,12 @@ const Header = () => {
     };
 
     return (
-        <header className='px-10 flex items-center justify-between'>
-            <div className="size-24">
-                <Link to={"/"} className='w-full h-full'>
-                    <img src={Logo} className='w-full h-full object-contain' alt="Logo" />
-                </Link>
-            </div>
+        <header className='p-5 pr-10 z-10 flex items-center bg-slate-100 justify-between w-full'>
+
+            <Link to={"/"} >
+                {/* <img src={Logo} className='w-full h-full object-contain' alt="Logo" /> */}
+                <h1 className=' font-bold text-2xl'>SIDI</h1>
+            </Link>
             <div className="flex gap-5 items-center">
                 {/* Map Color Picker */}
                 <div className="flex justify-center items-center relative">
@@ -201,17 +202,18 @@ const Header = () => {
                         <Palette size={20} className='text-white cursor-pointer' />
                     </label> */}
                     {/* {!showColorInput && */}
-                    <input
+                    {/* <input
                         type="color"
                         value={mapColor}
                         onChange={handleMapColorChange}
                         className="border-none cursor-pointer  mt-2  w-8 h-8"
-                    />
+                    /> */}
                     {/* } */}
                 </div>
 
                 {/* User Profile Dropdown */}
                 <div className="relative" ref={dropdownRef}>
+
                     <button
                         onClick={() => setIsOpen(!isOpen)}
                         className="size-10 bg-white rounded-full font-bold capitalize shadow-md flex items-center justify-center"
@@ -222,6 +224,10 @@ const Header = () => {
                     {isOpen && (
                         <ul className="z-50 absolute right-0 mt-2 w-36 bg-white shadow-lg rounded overflow-hidden">
                             <li>
+                                <Link
+                                    className=" block w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100 transition"
+
+                                    to={"/profile"}>Profile</Link>
                                 <button
                                     className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100 transition"
                                     onClick={handleLogout}

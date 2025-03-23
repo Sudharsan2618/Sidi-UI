@@ -12,6 +12,7 @@ import Enroll from "./Pages/Enroll";
 import Layout from "./Pages/Layout";
 import AuthRoute from "./Components/AuthRoute";
 import Ebooks from "./Pages/Ebooks";
+import UserProfile from "./Pages/UserProfile";
 
 function App() {
   return (
@@ -34,8 +35,18 @@ function App() {
                 <Home />
               </ProtectedRoute>
             }
+
           />
+
         </Route>
+        <Route
+          path="profile"
+          element={
+            <ProtectedRoute allowedRoles={["user"]} redirectPath="/login">
+              <UserProfile />
+            </ProtectedRoute>
+          }
+        />
 
         <Route path="*" element={<>Page not found</>}>
 

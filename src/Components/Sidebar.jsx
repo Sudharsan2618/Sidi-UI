@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { DollarSign, TrendingUp, FlaskConical, BookOpen } from "lucide-react";
+import { DollarSign, TrendingUp, FlaskConical, BookOpen, Users } from "lucide-react";
 
 const Sidebar = () => {
-    const [isOpen, setIsOpen] = useState(true);
-    const [active, setActive] = useState("Economy");
+    const [isOpen, setIsOpen] = useState(false);
+    const [active, setActive] = useState("Population");
 
     return (
         <div className="relative z-10">
@@ -13,6 +13,13 @@ const Sidebar = () => {
             >
                 {/* Menu Items */}
                 <nav className="flex flex-col gap-4">
+                    <button
+                        className={`flex items-center gap-2 hover:text-gray-600 p-2 rounded-[5px] ${active === "Population" ? "bg-blue-500 text-white" : "text-gray-700"}`}
+                        onClick={() => setActive("Population")}
+                    >
+                        <Users size={24} />
+                        <span>Population</span>
+                    </button>
                     <button
                         className={`flex items-center gap-2 hover:text-gray-600 p-2 rounded-[5px] ${active === "Economy" ? "bg-blue-500 text-white" : "text-gray-700"}`}
                         onClick={() => setActive("Economy")}
@@ -41,6 +48,7 @@ const Sidebar = () => {
                         <BookOpen size={24} />
                         <span>General Research</span>
                     </button>
+
                 </nav>
             </div>
             {/* Toggle Button */}
