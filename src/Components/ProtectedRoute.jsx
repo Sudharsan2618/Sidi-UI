@@ -27,9 +27,9 @@ const ProtectedRoute = ({ redirectPath = "/login", allowedRoles = [], children }
     const user = JSON.parse(localStorage.getItem("user"));
     const hasCompletedQuestions = JSON.parse(localStorage.getItem("hasCompletedQuestions") || "false");
 
-    if (!user) {
-        return <Navigate to={redirectPath} replace />;
-    }
+    // if (!user) {
+    //     return <Navigate to={redirectPath} replace />;
+    // }
 
     // if (!hasCompletedQuestions && window.location.pathname !== "/questions") {
     //     return <Navigate to="/questions" replace />;
