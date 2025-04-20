@@ -3,32 +3,63 @@
 const plugin = require("tailwindcss/plugin");
 
 export default {
-  content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
         primary: {
-          light: "#B3D9FF", // Light blue
-          DEFAULT: "#64A9FF", // Soft blue
-          dark: "#3879D2", // Deep blue
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          200: '#bae6fd',
+          300: '#7dd3fc',
+          400: '#38bdf8',
+          500: '#0ea5e9',
+          600: '#0284c7',
+          700: '#0369a1',
+          800: '#075985',
+          900: '#0c4a6e',
         },
         secondary: {
-          light: "#E9F4FF", // Very light blue
-          DEFAULT: "#A3C6FF", // Light sky blue
-          dark: "#3A7FB1", // Slightly deeper blue
+          50: '#fdf4ff',
+          100: '#fae8ff',
+          200: '#f5d0fe',
+          300: '#f0abfc',
+          400: '#e879f9',
+          500: '#d946ef',
+          600: '#c026d3',
+          700: '#a21caf',
+          800: '#86198f',
+          900: '#701a75',
         },
         neutral: {
-          light: "#F9F9F9", // Very light gray for background
-          DEFAULT: "#E1E1E1", // Soft neutral gray
-          dark: "#B0B0B0", // Slightly darker gray for accents
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569',
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
+        },
+        dark: {
+          bg: '#121212',
+          card: '#1e1e1e',
+          border: '#2e2e2e',
+          text: '#e0e0e0',
+          'text-secondary': '#a0a0a0',
         },
         danger: "#FF4F5A", // Soft red for errors
         success: "#50D27E", // Soft green for success messages
         warning: "#FFB542", // Soft orange for warnings
       },
       fontFamily: {
-        sans: ["Inter", "Roboto", "sans-serif"], // Keeping your original fonts
-        mono: ["Fira Code", "monospace"], // Great for coding contexts
+        sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         DEFAULT: "0.75rem", // Slightly larger for a refined feel
@@ -37,18 +68,29 @@ export default {
         full: "9999px",
       },
       boxShadow: {
-        blueGlow:
-          "0 4px 6px -1px rgba(100, 169, 255, 0.2), 0 2px 4px -2px rgba(100, 169, 255, 0.1)", // Soft blue glow
-      },
-
-      keyframes: {
-        'ping-cube': {
-          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
-          '50%': { transform: 'scale(1.5)', opacity: '0.6' },
-        },
+        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+        'glow': '0 0 15px rgba(14, 165, 233, 0.3)',
+        'dark': '0 2px 15px -3px rgba(0, 0, 0, 0.2), 0 10px 20px -2px rgba(0, 0, 0, 0.15)',
       },
       animation: {
-        'ping-cube': 'ping-cube 0.8s infinite',
+        'gradient': 'gradient 8s linear infinite',
+        'fade-in': 'fadeIn 0.5s ease-in',
+      },
+      keyframes: {
+        gradient: {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'left center'
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center'
+          },
+        },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
       },
     },
   },
@@ -70,7 +112,7 @@ export default {
           "&:hover": {
             backgroundColor: theme("colors.primary.dark"),
             transform: "scale(1.05)",
-            boxShadow: theme("boxShadow.blueGlow"),
+            boxShadow: theme("boxShadow.glow"),
           },
         },
         ".btn-secondary": {
@@ -79,7 +121,7 @@ export default {
           "&:hover": {
             backgroundColor: theme("colors.secondary.dark"),
             transform: "scale(1.05)",
-            boxShadow: theme("boxShadow.blueGlow"),
+            boxShadow: theme("boxShadow.glow"),
           },
         },
       });

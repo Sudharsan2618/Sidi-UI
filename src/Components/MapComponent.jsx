@@ -1,8 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsMapModule from 'highcharts/modules/map';
 import HighchartsDrilldown from 'highcharts/modules/drilldown';
 import HighchartsAccessibility from 'highcharts/modules/accessibility';
+import HighchartsMore from 'highcharts/highcharts-more';
+import HighchartsExporting from 'highcharts/modules/exporting';
+import HighchartsGlobe from 'highcharts/modules/tilemap';
 import { useSelector } from 'react-redux';
 
 // Import the Highcharts map module
@@ -12,42 +15,97 @@ import { useSelector } from 'react-redux';
 
 const MapComponent = ({ mapName, mapKey, data, onMapChange, mapType }) => {
   const chartRef = useRef(null);
-  const [countryData, setCountryData] = useState(null);
-  const [country, setCountry] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-
   const { mapColor: userColor } = useSelector(state => state.data)
 
-  // Fetch the country data from the API
-  const fetchCountry = async (country) => {
-    try {
-      const response = await fetch(`https://sidi-be.onrender.com/api/populationData`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          country_name: country,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('Error fetching country data:', error);
-      return null;
+  const getColorAxis = (type) => {
+    switch (type) {
+      case 'population':
+        return {
+          dataClasses: [
+            { to: 20, color: "#FF0000", name: "Poor" },
+            { from: 20, to: 40, color: "#FFFF00", name: "Below Average" },
+            { from: 40, to: 60, color: "#FFA500", name: "Average" },
+            { from: 60, to: 80, color: "#90EE90", name: "Above Average" },
+            { from: 80, color: "#008000", name: "Good" },
+          ]
+        };
+      case 'gdp':
+        return {
+          dataClasses: [
+            { to: 20, color: "#FF4136", name: "Very Low" },
+            { from: 20, to: 40, color: "#FF851B", name: "Low" },
+            { from: 40, to: 60, color: "#FFDC00", name: "Medium" },
+            { from: 60, to: 80, color: "#2ECC40", name: "High" },
+            { from: 80, color: "#01FF70", name: "Very High" },
+          ]
+        };
+      case 'market':
+        return {
+          dataClasses: [
+            { to: 20, color: "#B10DC9", name: "Emerging" },
+            { from: 20, to: 40, color: "#F012BE", name: "Developing" },
+            { from: 40, to: 60, color: "#85144b", name: "Stable" },
+            { from: 60, to: 80, color: "#39CCCC", name: "Growing" },
+            { from: 80, color: "#7FDBFF", name: "Mature" },
+          ]
+        };
+      case 'industries':
+        return {
+          dataClasses: [
+            { to: 20, color: "#001f3f", name: "Primary" },
+            { from: 20, to: 40, color: "#0074D9", name: "Secondary" },
+            { from: 40, to: 60, color: "#7FDBFF", name: "Tertiary" },
+            { from: 60, to: 80, color: "#39CCCC", name: "Quaternary" },
+            { from: 80, color: "#3D9970", name: "Quinary" },
+          ]
+        };
+      default:
+        return {
+          dataClasses: [
+            { to: 20, color: "#FF0000", name: "Poor" },
+            { from: 20, to: 40, color: "#FFFF00", name: "Below Average" },
+            { from: 40, to: 60, color: "#FFA500", name: "Average" },
+            { from: 60, to: 80, color: "#90EE90", name: "Above Average" },
+            { from: 80, color: "#008000", name: "Good" },
+          ]
+        };
     }
   };
 
-
+  const getTooltipFormatter = (type) => {
+    switch (type) {
+      case 'population':
+        return function () {
+          return `<strong>${this.point.name}</strong><br>Population Share: ${this.point.value.toFixed(2)}%`;
+        };
+      case 'gdp':
+        return function () {
+          return `<strong>${this.point.name}</strong><br>GDP Share: ${this.point.value.toFixed(2)}%`;
+        };
+      case 'market':
+        return function () {
+          return `<strong>${this.point.name}</strong><br>Market Share: ${this.point.value.toFixed(2)}%`;
+        };
+      case 'industries':
+        return function () {
+          return `<strong>${this.point.name}</strong><br>Industry Share: ${this.point.value.toFixed(2)}%`;
+        };
+      default:
+        return function () {
+          return `<strong>${this.point.name}</strong><br>Value: ${this.point.value.toFixed(2)}%`;
+        };
+    }
+  };
 
   useEffect(() => {
+    console.log('MapComponent received data:', data);
+    if (!data || !mapName) return;
 
-    console.log(data, "sol");
+    const chartData = data.map(item => {
+      console.log('Processing map item:', item);
+      return [item.key, item.value];
+    });
+    console.log('Processed chart data:', chartData);
 
     const fetchMapData = async () => {
       const response = await fetch(`https://code.highcharts.com/mapdata/${mapKey}.topo.json`);
@@ -62,94 +120,130 @@ const MapComponent = ({ mapName, mapKey, data, onMapChange, mapType }) => {
               display: "none",
             },
           },
-          width: window.innerWidth,
-          height: window.innerHeight,
-
+          margin: [8, 8, 8, 8],
+          animation: true,
+          height: '60%',
           events: {
-            drilldown: async function (e) {
-              const map =
-                Object.entries(Highcharts.mapDataIndex).find((map) =>
-                  map[0] === e.point.name
-                ) ||
-                Object.entries(Highcharts.mapDataIndex).find((map) =>
-                  map[0].indexOf(e.point.name) === 0
-                );
-              if (map) {
-                const [mapName, mapKey] = map;
-                onMapChange(mapName, mapKey);
-              }
-            },
-          },
+            load: function () {
+              this.reflow();
+            }
+          }
         },
 
         title: {
-          text: null, // Ensure the title is explicitly set to null
+          text: null,
         },
-        colorAxis: {
-          dataClasses: [
-            { to: 20, color: "#FF0000", name: "0 - 20 (Red)" }, // Red
-            { from: 20, to: 40, color: "#FFFF00", name: "20 - 40 (Yellow)" }, // Yellow
-            { from: 40, to: 60, color: "#FFA500", name: "40 - 60 (Orange)" }, // Orange
-            { from: 60, to: 80, color: "#90EE90", name: "60 - 80 (Light Green)" }, // Light Green
-            { from: 80, color: "#008000", name: "80+ (Green)" }, // Green
-          ],
-          showInLegend: true, // Show legend
-        },
-        legend: {
-          layout: "vertical",
-          align: "top", // Align to the right side
-          verticalAlign: "middle", // Position it in the middle
-          floating: false, // Keep it fixed
-          backgroundColor: "#FFFFFF", // White background for better visibility
-          borderWidth: 1, // Add a border
-        },
+
         mapNavigation: {
           enabled: true,
+          enableDoubleClickZoomTo: true,
           buttonOptions: {
-            alignTo: "spacingBox",
-            x: 10,
+            verticalAlign: 'bottom',
+            align: 'right',
+            alignTo: 'spacingBox',
           },
+          enableMouseWheelZoom: true
         },
+
+        mapView: {
+          projection: {
+            name: 'Orthographic',
+            rotation: [0, -90]
+          }
+        },
+
+        colorAxis: getColorAxis(mapType),
+        legend: {
+          layout: "horizontal",
+          align: "center",
+          verticalAlign: "bottom",
+          floating: false,
+          backgroundColor: "rgba(255, 255, 255, 0.85)",
+          borderWidth: 1,
+          borderRadius: 5,
+          padding: 12,
+          y: -40,
+          itemStyle: {
+            fontSize: '13px'
+          }
+        },
+
         tooltip: {
           useHTML: true,
           borderColor: "#FFFFFF",
           style: { fontSize: "12px" },
-          formatter: function () {
-            return `<strong>${this.point.name}</strong><br>Value: ${this.point.value}`;
-          },
+          formatter: getTooltipFormatter(mapType)
         },
-        series: [
-          {
-            data,
-            mapData: topology,
-            joinBy: ["hc-key", "key"],
-            name: country,
-            dataLabels: {
-              formatter: function () {
-                return this.point.properties && this.point.properties["hc-a2"];
-              },
-            },
-            events: {
-              click: async (e) => {
-                setCountry(e?.point?.name);
-                const countryInfo = await fetchCountry(e?.point?.name);
-                setCountryData(countryInfo);
-                setShowModal(true);
-              },
-            },
+
+        series: [{
+          name: mapName,
+          data: chartData,
+          mapData: topology,
+          joinBy: ["hc-key", 0],
+          borderColor: '#FFF',
+          borderWidth: 0.5,
+          states: {
+            hover: {
+              color: '#a4edba',
+              borderWidth: 1
+            }
           },
-        ],
+          dataLabels: {
+            enabled: true,
+            format: '{point.properties.hc-a2}',
+            style: {
+              textOutline: 'none',
+              fontWeight: 'normal'
+            }
+          }
+        }],
+
+        credits: {
+          enabled: false
+        }
       });
 
-      // Function to update chart size on window resize
+      // Add rotation on drag
+      let isMouseDown = false;
+      let previousX;
+      let previousY;
+
+      chart.container.addEventListener('mousedown', (e) => {
+        isMouseDown = true;
+        previousX = e.pageX;
+        previousY = e.pageY;
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        if (isMouseDown) {
+          const deltaX = e.pageX - previousX;
+          const deltaY = e.pageY - previousY;
+
+          const projection = chart.mapView.projection;
+          const rotation = projection.options.rotation;
+
+          projection.update({
+            rotation: [
+              rotation[0] + deltaY * 0.5,
+              rotation[1] - deltaX * 0.5
+            ]
+          }, true);
+
+          previousX = e.pageX;
+          previousY = e.pageY;
+        }
+      });
+
+      document.addEventListener('mouseup', () => {
+        isMouseDown = false;
+      });
+
       const handleResize = () => {
         chart.setSize(window.innerWidth, window.innerHeight, false);
       };
 
-      // Add event listener
       window.addEventListener("resize", handleResize);
 
-      // Cleanup function
       return () => {
         window.removeEventListener("resize", handleResize);
         chart.destroy();
@@ -157,54 +251,15 @@ const MapComponent = ({ mapName, mapKey, data, onMapChange, mapType }) => {
     };
 
     fetchMapData();
-  }, [mapName, mapKey, data, onMapChange, userColor]); // Re-run when dependencies change
-
-  // Modal Close Handler
-  const closeModal = () => {
-    setShowModal(false);
-    setCountryData(null);
-  };
+  }, [mapName, mapKey, data, onMapChange, userColor, mapType]);
 
   return (
-    <div>
-
-
-      <div ref={chartRef}></div>
-
-      {/* Modal to show country info */}
-      {showModal && countryData && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg max-w-lg w-full">
-            <h1 className="text-2xl font-bold mb-4">{country} Population Growth Trends</h1>
-            <div className="overflow-x-auto max-h-96">
-              <table className="min-w-full border border-gray-300 mb-4 table-fixed">
-                <thead className='sticky top-0'>
-                  <tr className="bg-gray-200">
-                    <th className="border px-4 py-2">Year</th>
-                    <th className="border px-4 py-2">Global Rank</th>
-                    <th className="border px-4 py-2">Yearly % Change</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {countryData.data.map((item, index) => (
-                    <tr key={index} className="border">
-                      <td className="border px-4 py-2">{item.year}</td>
-                      <td className="border px-4 py-2">{item.country_global_rank}</td>
-                      <td className="border px-4 py-2">{item.yearly_percentage_change}%</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded"
-              onClick={closeModal}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+    <div className="flex justify-center items-center w-full h-full">
+      <div
+        ref={chartRef}
+        className="w-full h-[calc(100vh-200px)] flex justify-center items-center"
+        style={{ minHeight: '600px' }}
+      />
     </div>
   );
 };

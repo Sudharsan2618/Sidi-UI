@@ -1,76 +1,60 @@
-// import { useState } from "react";
-// import { Send } from "lucide-react";
-// export default function ChatInput({ onSend }) {
-//     const [message, setMessage] = useState("");
+import React, { useState } from 'react';
+import { Send, Mic, PaperclipIcon } from 'lucide-react';
 
-//     const handleSend = () => {
-//         if (message.trim()) {
-//             onSend(message);
-//             setMessage("");
-//         }
-//     };
+const ChatInput = () => {
+    const [message, setMessage] = useState('');
 
-//     return (
-//         <div className="flex justify-center ">
-
-//             <div className="flex items-center gap-2 p-2 min-w-[40em] max-w-4xl ">
-//                 <input
-//                     type="text"
-//                     placeholder="Type a message..."
-//                     value={message}
-//                     onChange={(e) => setMessage(e.target.value)}
-//                     onKeyDown={(e) => e.key === "Enter" && handleSend()}
-//                     className="flex-1 p-2 border border-gray-300 rounded-[5px] focus:outline-none "
-//                 />
-//                 <button
-//                     onClick={handleSend}
-//                     disabled={!message.trim()}
-//                     className={`px-4 py-2 text-white rounded-[5px] transition-all duration-200 flex items-center gap-1 ${message.trim() ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-400 cursor-not-allowed"}`}
-//                 >
-//                     <Send size={16} />
-//                 </button>
-//             </div>
-//         </div>
-
-//     );
-// }
-
-
-import { useState } from "react";
-import { Send } from "lucide-react";
-
-export default function ChatInput({ onSend }) {
-    const [message, setMessage] = useState("");
-
-    const handleSend = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         if (message.trim()) {
-            onSend(message);
-            setMessage("");
+            // Handle message submission
+            console.log('Message sent:', message);
+            setMessage('');
         }
     };
 
     return (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 w-full max-w-2xl px-4">
-            <div className="flex items-center bg-white border border-gray-300 rounded-full shadow-md p-2 gap-2">
-                <input
-                    type="text"
-                    placeholder="Type a message..."
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                    className="flex-1 px-4 py-2 text-sm rounded-full border-none outline-none"
-                />
+        <div className="px-4 py-3">
+            <form onSubmit={handleSubmit} className="flex items-center gap-2">
                 <button
-                    onClick={handleSend}
-                    disabled={!message.trim()}
-                    className={`flex items-center justify-center p-2 rounded-full transition-all duration-200 ${message.trim()
-                        ? "bg-blue-500 hover:bg-blue-600 text-white shadow-md"
-                        : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                        }`}
+                    type="button"
+                    className="p-2 text-neutral-600 hover:text-primary-600 transition-colors duration-200"
                 >
-                    <Send size={18} />
+                    <PaperclipIcon size={20} />
                 </button>
-            </div>
+
+                <div className="flex-1 relative">
+                    <input
+                        type="text"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        placeholder="Type your message..."
+                        className="w-full px-4 py-2 rounded-full bg-neutral-100 focus:bg-white border border-neutral-200 
+                        focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all duration-200
+                        placeholder-neutral-500 text-neutral-900"
+                    />
+                </div>
+
+                <button
+                    type="button"
+                    className="p-2 text-neutral-600 hover:text-primary-600 transition-colors duration-200"
+                >
+                    <Mic size={20} />
+                </button>
+
+                <button
+                    type="submit"
+                    disabled={!message.trim()}
+                    className={`p-2 rounded-full transition-all duration-200
+                        ${message.trim()
+                            ? 'bg-primary-500 text-white hover:bg-primary-600 shadow-soft'
+                            : 'bg-neutral-200 text-neutral-400'}`}
+                >
+                    <Send size={20} />
+                </button>
+            </form>
         </div>
     );
-}
+};
+
+export default ChatInput;
