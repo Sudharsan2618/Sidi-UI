@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DollarSign, TrendingUp, Settings, ChevronLeft, ChevronRight, Store, Map, LayoutDashboard, ChevronDown } from 'lucide-react';
+import { DollarSign, TrendingUp, Settings, ChevronLeft, ChevronRight, Store, Map, LayoutDashboard, ChevronDown, Info, MessageSquare } from 'lucide-react';
 import UpgradeModal from './UpgradeModal';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -43,6 +43,20 @@ const Sidebar = () => {
         { icon: Map, label: "Map", path: "/investment/map" },
         { icon: LayoutDashboard, label: "Dashboard", path: "/investment/dashboard" }
       ]
+    },
+    {
+      icon: Info,
+      label: "About",
+      key: "about",
+      hasSubmenu: false,
+      path: "/about"
+    },
+    {
+      icon: MessageSquare,
+      label: "Contact",
+      key: "contact",
+      hasSubmenu: false,
+      path: "/contact"
     }
   ];
 
@@ -66,7 +80,9 @@ const Sidebar = () => {
       setActiveSubmenu(activeSubmenu === item.key ? "" : item.key);
     } else {
       setActiveSubmenu("");
-      // Handle navigation for items without submenu if needed
+      if (item.path) {
+        navigate(item.path);
+      }
     }
   };
 

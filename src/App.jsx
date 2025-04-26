@@ -13,6 +13,8 @@ import MarketMap from "./Pages/MarketMap";
 import MarketDashboard from "./Pages/MarketDashboard";
 import InvestmentMap from "./Pages/InvestmentMap";
 import InvestmentDashboard from "./Pages/InvestmentDashboard";
+import About from "./Pages/About";
+import Contact from "./Pages/Contact";
 
 function App() {
   return (
@@ -96,6 +98,26 @@ function App() {
             element={
               <ProtectedRoute redirectPath="/login">
                 <UserProfile />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* About Route */}
+          <Route
+            path="about"
+            element={
+              <ProtectedRoute redirectPath="/login">
+                <About />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Contact Route */}
+          <Route
+            path="contact"
+            element={
+              <ProtectedRoute redirectPath="/login">
+                <Contact />
               </ProtectedRoute>
             }
           />
