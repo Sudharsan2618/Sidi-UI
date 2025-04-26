@@ -18,83 +18,21 @@ const MapComponent = ({ mapName, mapKey, data, onMapChange, mapType }) => {
   const { mapColor: userColor } = useSelector(state => state.data)
 
   const getColorAxis = (type) => {
-    switch (type) {
-      case 'population':
-        return {
-          dataClasses: [
-            { to: 20, color: "#FF0000", name: "Poor" },
-            { from: 20, to: 40, color: "#FFFF00", name: "Below Average" },
-            { from: 40, to: 60, color: "#FFA500", name: "Average" },
-            { from: 60, to: 80, color: "#90EE90", name: "Above Average" },
-            { from: 80, color: "#008000", name: "Good" },
-          ]
-        };
-      case 'gdp':
-        return {
-          dataClasses: [
-            { to: 20, color: "#FF4136", name: "Very Low" },
-            { from: 20, to: 40, color: "#FF851B", name: "Low" },
-            { from: 40, to: 60, color: "#FFDC00", name: "Medium" },
-            { from: 60, to: 80, color: "#2ECC40", name: "High" },
-            { from: 80, color: "#01FF70", name: "Very High" },
-          ]
-        };
-      case 'market':
-        return {
-          dataClasses: [
-            { to: 20, color: "#B10DC9", name: "Emerging" },
-            { from: 20, to: 40, color: "#F012BE", name: "Developing" },
-            { from: 40, to: 60, color: "#85144b", name: "Stable" },
-            { from: 60, to: 80, color: "#39CCCC", name: "Growing" },
-            { from: 80, color: "#7FDBFF", name: "Mature" },
-          ]
-        };
-      case 'industries':
-        return {
-          dataClasses: [
-            { to: 20, color: "#001f3f", name: "Primary" },
-            { from: 20, to: 40, color: "#0074D9", name: "Secondary" },
-            { from: 40, to: 60, color: "#7FDBFF", name: "Tertiary" },
-            { from: 60, to: 80, color: "#39CCCC", name: "Quaternary" },
-            { from: 80, color: "#3D9970", name: "Quinary" },
-          ]
-        };
-      default:
-        return {
-          dataClasses: [
-            { to: 20, color: "#FF0000", name: "Poor" },
-            { from: 20, to: 40, color: "#FFFF00", name: "Below Average" },
-            { from: 40, to: 60, color: "#FFA500", name: "Average" },
-            { from: 60, to: 80, color: "#90EE90", name: "Above Average" },
-            { from: 80, color: "#008000", name: "Good" },
-          ]
-        };
-    }
+    return {
+      dataClasses: [
+        { to: 20, color: '#bbf7d0', name: 'Poor' },    // Lightest green
+        { from: 20, to: 40, color: '#6ee7b7', name: 'Below Average' },
+        { from: 40, to: 60, color: '#34d399', name: 'Average' },
+        { from: 60, to: 80, color: '#059669', name: 'Above Average' },
+        { from: 80, color: '#065f46', name: 'Good' } // Darkest green
+      ]
+    };
   };
 
   const getTooltipFormatter = (type) => {
-    switch (type) {
-      case 'population':
-        return function () {
-          return `<strong>${this.point.name}</strong><br>Population Share: ${this.point.value.toFixed(2)}%`;
-        };
-      case 'gdp':
-        return function () {
-          return `<strong>${this.point.name}</strong><br>GDP Share: ${this.point.value.toFixed(2)}%`;
-        };
-      case 'market':
-        return function () {
-          return `<strong>${this.point.name}</strong><br>Market Share: ${this.point.value.toFixed(2)}%`;
-        };
-      case 'industries':
-        return function () {
-          return `<strong>${this.point.name}</strong><br>Industry Share: ${this.point.value.toFixed(2)}%`;
-        };
-      default:
-        return function () {
-          return `<strong>${this.point.name}</strong><br>Value: ${this.point.value.toFixed(2)}%`;
-        };
-    }
+    return function () {
+      return `<strong>${this.point.name}</strong>`;
+    };
   };
 
   useEffect(() => {
@@ -134,14 +72,15 @@ const MapComponent = ({ mapName, mapKey, data, onMapChange, mapType }) => {
           text: null,
         },
 
+        // Disable all exporting options
+        exporting: {
+          enabled: false
+        },
+
+        // Disable map navigation buttons (zoom buttons)
         mapNavigation: {
-          enabled: true,
+          enabled: false,
           enableDoubleClickZoomTo: true,
-          buttonOptions: {
-            verticalAlign: 'bottom',
-            align: 'right',
-            alignTo: 'spacingBox',
-          },
           enableMouseWheelZoom: true
         },
 
@@ -189,12 +128,7 @@ const MapComponent = ({ mapName, mapKey, data, onMapChange, mapType }) => {
             }
           },
           dataLabels: {
-            enabled: true,
-            format: '{point.properties.hc-a2}',
-            style: {
-              textOutline: 'none',
-              fontWeight: 'normal'
-            }
+            enabled: false
           }
         }],
 

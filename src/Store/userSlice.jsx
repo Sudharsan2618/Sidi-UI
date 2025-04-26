@@ -1,7 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../api/api";
 import toast from 'react-hot-toast';
-import { redirect } from "react-router-dom";
+
+// Helper function to save auth data
+const saveAuthData = (user, token) => {
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("token", token);
+};
+
+// Helper function to clear auth data
+const clearAuthData = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+};
 
 // Login API
 export const login = createAsyncThunk(
@@ -9,9 +20,12 @@ export const login = createAsyncThunk(
     async ({ email, password }, { rejectWithValue }) => {
         try {
             const response = await api.post("/login", { email, password });
-            return response.data; // Assuming the server responds with user data or a token
+            if (response.data.token) {
+                api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+            }
+            return response.data;
         } catch (error) {
-            return rejectWithValue(error.response.data || "An error occurred");
+            return rejectWithValue(error.response?.data || "An error occurred");
         }
     }
 );
@@ -22,9 +36,9 @@ export const signup = createAsyncThunk(
     async ({ username, email, password }, { rejectWithValue }) => {
         try {
             const response = await api.post("/signup", { username, email, password });
-            return response.data; // Assuming the server responds with user data or a success message
+            return response.data;
         } catch (error) {
-            return rejectWithValue(error.response.data || "An error occurred");
+            return rejectWithValue(error.response?.data || "An error occurred");
         }
     }
 );
@@ -32,17 +46,18 @@ export const signup = createAsyncThunk(
 const userSlice = createSlice({
     name: "user",
     initialState: {
-        user: null,
-        token: null,
+        user: JSON.parse(localStorage.getItem("user")) || null,
+        token: localStorage.getItem("token") || null,
         loading: false,
         error: null,
-        isSigned: false,
-        assessmentCompleted: false
+        isSigned: false
     },
     reducers: {
         logout: (state) => {
             state.user = null;
             state.token = null;
+            clearAuthData();
+            delete api.defaults.headers.common['Authorization'];
         },
     },
     extraReducers: (builder) => {
@@ -56,15 +71,10 @@ const userSlice = createSlice({
                 state.loading = false;
                 state.user = action.payload.user;
                 state.token = action.payload.token;
+
+                // Save auth data
+                saveAuthData(action.payload.user, action.payload.token);
                 toast.success(action.payload.message);
-
-                localStorage.setItem("user", JSON.stringify(state.user));
-
-                const isAssessmentCompleted = action.payload.user.initial_assessment === "completed";
-                state.assessmentCompleted = isAssessmentCompleted;
-
-                // Store as a proper JSON boolean string
-                localStorage.setItem("hasCompletedQuestions", JSON.stringify(isAssessmentCompleted));
             })
             .addCase(login.rejected, (state, action) => {
                 state.loading = false;
@@ -75,19 +85,18 @@ const userSlice = createSlice({
             .addCase(signup.pending, (state) => {
                 state.loading = true;
                 state.error = null;
-                state.isSigned = false
+                state.isSigned = false;
             })
             .addCase(signup.fulfilled, (state, action) => {
                 state.loading = false;
-                state.isSigned = true
-                toast.success(action.payload.message)
+                state.isSigned = true;
+                toast.success(action.payload.message);
             })
             .addCase(signup.rejected, (state, action) => {
                 state.loading = false;
-                state.isSigned = false
+                state.isSigned = false;
                 state.error = action.payload;
-                toast.error(action.payload.error)
-
+                toast.error(action.payload.error);
             });
     },
 });

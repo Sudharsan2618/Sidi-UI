@@ -1,17 +1,11 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
-import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/Signup";
 import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import Questions from "./Pages/Questions";
-import Courses from "./Pages/Courses";
-import Course from "./Pages/Course";
-import Enroll from "./Pages/Enroll";
 import Layout from "./Pages/Layout";
 import AuthRoute from "./Components/AuthRoute";
-import Ebooks from "./Pages/Ebooks";
 import UserProfile from "./Pages/UserProfile";
 import EconomyMap from "./Pages/EconomyMap";
 import EconomyDashboard from "./Pages/EconomyDashboard";
@@ -32,12 +26,12 @@ function App() {
 
         {/* Protected routes */}
         <Route path="/" element={<Layout />}>
-          {/* Role-based protected routes */}
+          {/* Index route */}
           <Route
             index
             element={
-              <ProtectedRoute allowedRoles={["admin", "user"]} redirectPath="/login">
-                <Home />
+              <ProtectedRoute redirectPath="/login">
+                <Navigate to="/economy/map" replace />
               </ProtectedRoute>
             }
           />
@@ -46,7 +40,7 @@ function App() {
           <Route
             path="economy/map"
             element={
-              <ProtectedRoute allowedRoles={["admin", "user"]} redirectPath="/login">
+              <ProtectedRoute redirectPath="/login">
                 <EconomyMap />
               </ProtectedRoute>
             }
@@ -54,7 +48,7 @@ function App() {
           <Route
             path="economy/dashboard"
             element={
-              <ProtectedRoute allowedRoles={["admin", "user"]} redirectPath="/login">
+              <ProtectedRoute redirectPath="/login">
                 <EconomyDashboard />
               </ProtectedRoute>
             }
@@ -64,7 +58,7 @@ function App() {
           <Route
             path="market/map"
             element={
-              <ProtectedRoute allowedRoles={["admin", "user"]} redirectPath="/login">
+              <ProtectedRoute redirectPath="/login">
                 <MarketMap />
               </ProtectedRoute>
             }
@@ -72,7 +66,7 @@ function App() {
           <Route
             path="market/dashboard"
             element={
-              <ProtectedRoute allowedRoles={["admin", "user"]} redirectPath="/login">
+              <ProtectedRoute redirectPath="/login">
                 <MarketDashboard />
               </ProtectedRoute>
             }
@@ -82,7 +76,7 @@ function App() {
           <Route
             path="investment/map"
             element={
-              <ProtectedRoute allowedRoles={["admin", "user"]} redirectPath="/login">
+              <ProtectedRoute redirectPath="/login">
                 <InvestmentMap />
               </ProtectedRoute>
             }
@@ -90,7 +84,7 @@ function App() {
           <Route
             path="investment/dashboard"
             element={
-              <ProtectedRoute allowedRoles={["admin", "user"]} redirectPath="/login">
+              <ProtectedRoute redirectPath="/login">
                 <InvestmentDashboard />
               </ProtectedRoute>
             }
@@ -100,7 +94,7 @@ function App() {
           <Route
             path="profile"
             element={
-              <ProtectedRoute allowedRoles={["user"]} redirectPath="/login">
+              <ProtectedRoute redirectPath="/login">
                 <UserProfile />
               </ProtectedRoute>
             }

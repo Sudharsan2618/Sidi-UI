@@ -314,12 +314,6 @@ export default function UserProfile() {
 
     return (
         <div className="flex flex-col min-h-screen  p-4 md:p-6">
-            <Link to={"/"}>
-                <button className="fixed top-10 left-10 text-blue-700 flex items-center space-x-2">
-                    <ArrowLeft className="w-5 h-5" />
-                    <span>Back</span>
-                </button>
-            </Link>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 {/* Profile Card */}
                 <div className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-center">

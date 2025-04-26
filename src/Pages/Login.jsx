@@ -33,11 +33,8 @@ const Login = () => {
     onSubmit: (values) => {
       const { email, password } = values
       dispatch(login({ email, password }))
-
-
     },
   });
-
 
   const navigate = useNavigate();
 
@@ -49,15 +46,11 @@ const Login = () => {
     }
   }, [user, navigate]);
 
-
   return (
     <div className="flex min-h-screen h-[100vh] flex-col md:flex-row">
-
-
-
-      <div className="w-full md:w-1/2 flex items-center justify-center p-4 md:p-0 bg-gradient-to-tr from-primary to-white">
-        <div className="w-full max-w-sm p-6 bg-white rounded-lg shadow-lg shadow-yellowGlow">
-          <h2 className="text-2xl font-semibold text-center text-primary-dark mb-6 font-sans">
+      <div className="w-full md:w-1/2 flex items-center justify-center p-4 md:p-0 bg-gradient-to-tr from-primary to-white dark:from-primary-dark dark:to-dark-bg">
+        <div className="w-full max-w-sm p-6 bg-white dark:bg-dark-bg rounded-lg shadow-lg shadow-yellowGlow dark:shadow-emeraldGlow">
+          <h2 className="text-2xl font-semibold text-center text-primary-dark dark:text-primary-light mb-6 font-sans">
             Login
           </h2>
 
@@ -66,7 +59,7 @@ const Login = () => {
             <div className="mb-4">
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-primary-dark mb-2"
+                className="block text-sm font-medium text-primary-dark dark:text-primary-light mb-2"
               >
                 Email Address
               </label>
@@ -74,9 +67,9 @@ const Login = () => {
                 type="email"
                 id="email"
                 name="email"
-                className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${formik.touched.email && formik.errors.email
-                  ? "border-red-500 focus:ring-red-400"
-                  : "border-neutral focus:ring-primary-light"
+                className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 dark:bg-dark-bg dark:text-white ${formik.touched.email && formik.errors.email
+                    ? "border-red-500 focus:ring-red-400"
+                    : "border-neutral focus:ring-primary-light dark:border-primary-light"
                   }`}
                 placeholder="Enter your email"
                 value={formik.values.email}
@@ -94,7 +87,7 @@ const Login = () => {
             <div className="mb-6">
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-primary-dark mb-2"
+                className="block text-sm font-medium text-primary-dark dark:text-primary-light mb-2"
               >
                 Password
               </label>
@@ -103,9 +96,9 @@ const Login = () => {
                   type={passwordVisible ? "text" : "password"}
                   id="password"
                   name="password"
-                  className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${formik.touched.password && formik.errors.password
-                    ? "border-red-500 focus:ring-red-400"
-                    : "border-neutral focus:ring-primary-light"
+                  className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 dark:bg-dark-bg dark:text-white ${formik.touched.password && formik.errors.password
+                      ? "border-red-500 focus:ring-red-400"
+                      : "border-neutral focus:ring-primary-light dark:border-primary-light"
                     }`}
                   placeholder="Enter your password"
                   value={formik.values.password}
@@ -115,7 +108,7 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute right-3 top-3 text-primary-dark"
+                  className="absolute right-3 top-3 text-primary-dark dark:text-primary-light"
                 >
                   {passwordVisible ? "Hide" : "Show"}
                 </button>
@@ -130,16 +123,16 @@ const Login = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="btn btn-primary w-full py-2"
+              className="btn btn-primary w-full py-2 dark:bg-primary-dark dark:hover:bg-primary-darker"
               disabled={!formik.isValid || formik.isSubmitting || loading}
             >
               {loading ? "Loading..." : "Login"}
             </button>
             {/* Don't have an account? */}
             <div className="mt-4 text-center">
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-gray-600 dark:text-gray-300">
                 Don't have an account?{" "}
-                <Link to="/signup" className="text-primary-dark font-semibold">
+                <Link to="/signup" className="text-primary-dark dark:text-primary-light font-semibold">
                   Sign up here
                 </Link>
               </span>
@@ -148,11 +141,9 @@ const Login = () => {
         </div>
       </div>
 
-
-
-      <div className="w-full  h-full md:w-1/2 DEFAULT  text-white flex items-center justify-center ">
+      <div className="w-full h-full md:w-1/2 DEFAULT text-white flex items-center justify-center">
         <img
-          className="h-full w-full object-fill "
+          className="h-full w-full object-fill"
           src={loginImage}
           alt="login"
         />

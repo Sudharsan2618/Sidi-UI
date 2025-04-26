@@ -60,7 +60,7 @@ const InvestmentMap = () => {
                                 height="50"
                                 width="50"
                                 radius="9"
-                                color="blue"
+                                color="#22c55e"
                                 ariaLabel="loading"
                                 wrapperStyle
                                 wrapperClass

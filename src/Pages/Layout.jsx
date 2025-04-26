@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from '../Components/Header';
 import Sidebar from '../Components/Sidebar';
-import ChatInput from '../Components/ChatInput';
 
 const Layout = () => {
     const location = useLocation();
@@ -32,11 +31,6 @@ const Layout = () => {
                         </div>
                     </div>
                 </main>
-
-                {/* Chat Input at the bottom */}
-                <div className="bg-white dark:bg-dark-card border-t border-neutral-200 dark:border-dark-border shadow-soft dark:shadow-dark transition-colors duration-200">
-                    <ChatInput />
-                </div>
             </div>
         </div>
     );
