@@ -43,13 +43,13 @@ const EconomyDashboard = () => {
                 borderColor: '#4ADE80',
                 fill: false,
             },
-             {
+            {
                 label: 'Germany',
                 data: [2.5, 3, 4, 5.5, 5],
                 borderColor: '#F87171',
                 fill: false,
             },
-             {
+            {
                 label: 'UK',
                 data: [3.5, 4.5, 5.5, 6.5, 5.5],
                 borderColor: '#818CF8',
@@ -86,7 +86,7 @@ const EconomyDashboard = () => {
         { country: 'UK', gdp: '3,300', growth: '+0.5%', unemployment: '4.2%', inflation: '4.2%', debt: '103%' },
     ];
 
-     const gdpGrowthTrendsData = {
+    const gdpGrowthTrendsData = {
         labels: ['2019', '2020', '2021', '2022', '2023'],
         datasets: [
             {
@@ -101,7 +101,7 @@ const EconomyDashboard = () => {
                 borderColor: '#22D3EE',
                 fill: false,
             },
-             {
+            {
                 label: 'Japan',
                 data: [0.7, -4.8, 2.6, 1.1, 1.0],
                 borderColor: '#4ADE80',
@@ -125,7 +125,7 @@ const EconomyDashboard = () => {
                 borderColor: '#F87171',
                 fill: false,
             },
-             {
+            {
                 label: 'UK',
                 data: [3.8, 4.5, 4.7, 3.8, 4.2],
                 borderColor: '#818CF8',
@@ -134,7 +134,7 @@ const EconomyDashboard = () => {
         ],
     };
 
-     const tradeData = {
+    const tradeData = {
         labels: ['2019', '2020', '2021', '2022', '2023'],
         datasets: [
             {
@@ -151,27 +151,27 @@ const EconomyDashboard = () => {
     };
 
     const tradeBalanceData = {
-         labels: ['2019', '2020', '2021', '2022', '2023'],
-         datasets: [
-             {
-                 label: 'Trade Balance (Billion USD)',
-                 data: [-400, -400, -500, -600, -600],
-                 borderColor: '#A78BFA',
-                 fill: false,
-             },
-         ],
+        labels: ['2019', '2020', '2021', '2022', '2023'],
+        datasets: [
+            {
+                label: 'Trade Balance (Billion USD)',
+                data: [-400, -400, -500, -600, -600],
+                borderColor: '#A78BFA',
+                fill: false,
+            },
+        ],
     };
 
     const leadingEconomicIndexData = {
-         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-         datasets: [
-             {
-                 label: 'Leading Economic Index',
-                 data: [100, 101, 100.5, 102, 101.5, 102.5, 103, 102.8, 103.5, 103.2, 104, 103.8],
-                 borderColor: '#4ADE80',
-                 fill: false,
-             },
-         ],
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [
+            {
+                label: 'Leading Economic Index',
+                data: [100, 101, 100.5, 102, 101.5, 102.5, 103, 102.8, 103.5, 103.2, 104, 103.8],
+                borderColor: '#4ADE80',
+                fill: false,
+            },
+        ],
     };
 
     const governmentDebtData = {
@@ -188,13 +188,13 @@ const EconomyDashboard = () => {
     const renderContent = () => {
         switch (activeTab) {
             case 'Overview':
-    return (
+                return (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         {/* GDP by Country Bar Chart */}
                         <Fade direction="up" triggerOnce>
                             <div className="bg-white dark:bg-dark-card rounded-lg shadow-sm p-6">
                                 <h2 className="text-lg font-semibold mb-4 dark:text-white">GDP by Country (Billion USD)</h2>
-                                 <div className="h-72">
+                                <div className="h-72">
                                     <Bar data={gdpByCountryData} options={{ maintainAspectRatio: false }} />
                                 </div>
                             </div>
@@ -211,26 +211,26 @@ const EconomyDashboard = () => {
                         </Fade>
 
                         {/* Global GDP Distribution Donut Chart */}
-                         <Fade direction="up" triggerOnce delay={200}>
+                        <Fade direction="up" triggerOnce delay={200}>
                             <div className="bg-white dark:bg-dark-card rounded-lg shadow-sm p-6">
                                 <h2 className="text-lg font-semibold mb-4 dark:text-white">Global GDP Distribution</h2>
-                                 <div className="h-72 flex items-center justify-center">
-                                     <Doughnut data={gdpDistributionData} options={{ maintainAspectRatio: false }} />
-                                 </div>
+                                <div className="h-72 flex items-center justify-center">
+                                    <Doughnut data={gdpDistributionData} options={{ maintainAspectRatio: false }} />
+                                </div>
                             </div>
                         </Fade>
 
                         {/* Global Economic Sectors Donut Chart */}
                         <Fade direction="up" triggerOnce delay={300}>
                             <div className="bg-white dark:bg-dark-card rounded-lg shadow-sm p-6">
-                                 <h2 className="text-lg font-semibold mb-4 dark:text-white">Global Economic Sectors</h2>
-                                  <div className="h-72 flex items-center justify-center">
+                                <h2 className="text-lg font-semibold mb-4 dark:text-white">Global Economic Sectors</h2>
+                                <div className="h-72 flex items-center justify-center">
                                     <Doughnut data={economicSectorsData} options={{ maintainAspectRatio: false }} />
                                 </div>
                             </div>
                         </Fade>
 
-                         {/* Key Economic Indicators Table - Full Width */}
+                        {/* Key Economic Indicators Table - Full Width */}
                         <Fade direction="up" triggerOnce delay={400}>
                             <div className="lg:col-span-2 bg-white dark:bg-dark-card rounded-lg shadow-sm p-6">
                                 <h2 className="text-lg font-semibold mb-4 dark:text-white">Key Economic Indicators</h2>
@@ -259,8 +259,8 @@ const EconomyDashboard = () => {
                                             ))}
                                         </tbody>
                                     </table>
-                        </div>
-                        </div>
+                                </div>
+                            </div>
                         </Fade>
 
                     </div>
@@ -270,18 +270,18 @@ const EconomyDashboard = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         {/* GDP Growth Trends Line Chart */}
                         <Fade direction="up" triggerOnce>
-                             <div className="bg-white dark:bg-dark-card rounded-lg shadow-sm p-6">
+                            <div className="bg-white dark:bg-dark-card rounded-lg shadow-sm p-6">
                                 <h2 className="text-xl font-semibold dark:text-white mb-4">GDP Growth Trends</h2>
-                                 <div className="h-96">
+                                <div className="h-96">
                                     <Line data={gdpGrowthTrendsData} options={{ maintainAspectRatio: false }} />
                                 </div>
-            </div>
+                            </div>
                         </Fade>
-                         {/* Unemployment Rate Line Chart */}
+                        {/* Unemployment Rate Line Chart */}
                         <Fade direction="up" triggerOnce delay={100}>
-                <div className="bg-white dark:bg-dark-card rounded-lg shadow-sm p-6">
+                            <div className="bg-white dark:bg-dark-card rounded-lg shadow-sm p-6">
                                 <h2 className="text-xl font-semibold dark:text-white mb-4">Unemployment Rate (%)</h2>
-                                 <div className="h-96">
+                                <div className="h-96">
                                     <Line data={unemploymentRateData} options={{ maintainAspectRatio: false }} />
                                 </div>
                             </div>
@@ -291,20 +291,24 @@ const EconomyDashboard = () => {
             case 'Trade':
                 return (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                         {/* Exports and Imports Bar Chart */}
-                         <Fade direction="up" triggerOnce>
-                            <h2 className="text-xl font-semibold dark:text-white mb-4">Exports and Imports (Billion USD)</h2>
-                             <div className="bg-white dark:bg-dark-card rounded-lg shadow-sm p-6 h-96">
-                                <Bar data={tradeData} options={{ maintainAspectRatio: false }} />
+                        {/* Exports and Imports Bar Chart */}
+                        <Fade direction="up" triggerOnce>
+                            <div className="bg-white dark:bg-dark-card rounded-lg shadow-sm p-6 h-96 flex flex-col">
+                                <h2 className="text-xl font-semibold dark:text-white mb-4">Exports and Imports (Billion USD)</h2>
+                                <div className="flex-1">
+                                    <Bar data={tradeData} options={{ maintainAspectRatio: false }} />
+                                </div>
                             </div>
-                         </Fade>
-                         {/* Trade Balance Line Chart */}
-                         <Fade direction="up" triggerOnce delay={100}>
-                            <h2 className="text-xl font-semibold dark:text-white mb-4">Trade Balance (Billion USD)</h2>
-                             <div className="bg-white dark:bg-dark-card rounded-lg shadow-sm p-6 h-96">
-                                <Line data={tradeBalanceData} options={{ maintainAspectRatio: false }} />
+                        </Fade>
+                        {/* Trade Balance Line Chart */}
+                        <Fade direction="up" triggerOnce delay={100}>
+                            <div className="bg-white dark:bg-dark-card rounded-lg shadow-sm p-6 h-96 flex flex-col">
+                                <h2 className="text-xl font-semibold dark:text-white mb-4">Trade Balance (Billion USD)</h2>
+                                <div className="flex-1">
+                                    <Line data={tradeBalanceData} options={{ maintainAspectRatio: false }} />
+                                </div>
                             </div>
-                         </Fade>
+                        </Fade>
                     </div>
                 );
             case 'Indicators':
@@ -312,16 +316,20 @@ const EconomyDashboard = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         {/* Leading Economic Index Line Chart */}
                         <Fade direction="up" triggerOnce>
-                            <h2 className="text-xl font-semibold dark:text-white mb-4">Leading Economic Index</h2>
-                             <div className="bg-white dark:bg-dark-card rounded-lg shadow-sm p-6 h-96">
-                                <Line data={leadingEconomicIndexData} options={{ maintainAspectRatio: false }} />
+                            <div className="bg-white dark:bg-dark-card rounded-lg shadow-sm p-6 h-96 flex flex-col">
+                                <h2 className="text-xl font-semibold dark:text-white mb-4">Leading Economic Index</h2>
+                                <div className="flex-1">
+                                    <Line data={leadingEconomicIndexData} options={{ maintainAspectRatio: false }} />
+                                </div>
                             </div>
                         </Fade>
-                         {/* Government Debt to GDP Bar Chart */}
+                        {/* Government Debt to GDP Bar Chart */}
                         <Fade direction="up" triggerOnce delay={100}>
-                            <h2 className="text-xl font-semibold dark:text-white mb-4">Government Debt to GDP (%)</h2>
-                             <div className="bg-white dark:bg-dark-card rounded-lg shadow-sm p-6 h-96">
-                                <Bar data={governmentDebtData} options={{ maintainAspectRatio: false }} />
+                            <div className="bg-white dark:bg-dark-card rounded-lg shadow-sm p-6 h-96 flex flex-col">
+                                <h2 className="text-xl font-semibold dark:text-white mb-4">Government Debt to GDP (%)</h2>
+                                <div className="flex-1">
+                                    <Bar data={governmentDebtData} options={{ maintainAspectRatio: false }} />
+                                </div>
                             </div>
                         </Fade>
                     </div>
@@ -353,7 +361,7 @@ const EconomyDashboard = () => {
                         <button className={`inline-block p-4 border-b-2 rounded-t-lg ${activeTab === 'Indicators' ? 'border-primary-600 text-primary-600 dark:border-primary-400 dark:text-primary-400' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'}`} id="indicators-tab" data-tabs-target="#indicators" type="button" role="tab" aria-controls="indicators" aria-selected={activeTab === 'Indicators'} onClick={() => setActiveTab('Indicators')}>Indicators</button>
                     </li>
                 </ul>
-                </div>
+            </div>
 
             <div>
                 {renderContent()}

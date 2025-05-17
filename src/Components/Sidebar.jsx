@@ -3,6 +3,7 @@ import { DollarSign, TrendingUp, Settings, ChevronLeft, ChevronRight, Store, Map
 import UpgradeModal from './UpgradeModal';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
+import logo from '../assets/images/logo.png';
 
 const Sidebar = () => {
   const [active, setActive] = useState("");
@@ -107,11 +108,12 @@ const Sidebar = () => {
         }
       </button>
 
-      <div className={`px-4 py-6 border-b ${isDark ? 'border-dark-border' : 'border-neutral-200'}`}>
-        <h1 className={`text-3xl font-bold text-primary-500
+      <div className={`flex items-center justify-center border-b ${isDark ? 'border-dark-border' : 'border-neutral-200'}`}>
+        {/* <h1 className={`text-3xl font-bold text-primary-500
           ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
           SIDI
-        </h1>
+        </h1> */}
+        <img src={logo} alt="SIDI" className="size-[150px] object-contain" />
       </div>
 
       <nav className="flex-grow overflow-y-auto py-6 px-3">
