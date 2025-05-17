@@ -3,7 +3,7 @@ import { DollarSign, TrendingUp, Settings, ChevronLeft, ChevronRight, Store, Map
 import UpgradeModal from './UpgradeModal';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
-import logo from '../assets/images/logo.png';
+import logo from '../assets/images/Logo.png';
 
 const Sidebar = () => {
   const [active, setActive] = useState("");
