@@ -51,30 +51,34 @@ const MarketMap = () => {
     }, []);
 
     return (
-        <div className="min-h-screen flex justify-center items-center">
-            <div id="demo-wrapper" className="w-full p-4">
-                <div id="map-box" className="relative">
-                    {loading ? (
-                        <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 bg-white">
-                            <Audio
-                                height="50"
-                                width="50"
-                                radius="9"
-                                color="#22c55e"
-                                ariaLabel="loading"
-                                wrapperStyle
-                                wrapperClass
+        <div className="p-6">
+            <h1 className="text-2xl font-bold mb-2 dark:text-white">Global Market Share Distribution</h1>
+            <p className="text-gray-600 dark:text-gray-300 mb-6">Visualizing market share distribution across the globe.</p>
+            <div className="flex justify-center items-center">
+                <div id="demo-wrapper" className="w-full p-4">
+                    <div id="map-box" className="relative">
+                        {loading ? (
+                            <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 bg-white">
+                                <Audio
+                                    height="50"
+                                    width="50"
+                                    radius="9"
+                                    color="#22c55e"
+                                    ariaLabel="loading"
+                                    wrapperStyle
+                                    wrapperClass
+                                />
+                            </div>
+                        ) : (
+                            <MapComponent
+                                mapName={mapName}
+                                mapKey={mapKey}
+                                mapType="market"
+                                data={data}
+                                onMapChange={handleMapChange}
                             />
-                        </div>
-                    ) : (
-                        <MapComponent
-                            mapName={mapName}
-                            mapKey={mapKey}
-                            mapType="market"
-                            data={data}
-                            onMapChange={handleMapChange}
-                        />
-                    )}
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

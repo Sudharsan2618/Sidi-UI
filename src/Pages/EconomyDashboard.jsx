@@ -188,7 +188,7 @@ const EconomyDashboard = () => {
     const renderContent = () => {
         switch (activeTab) {
             case 'Overview':
-                return (
+    return (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         {/* GDP by Country Bar Chart */}
                         <Fade direction="up" triggerOnce>
@@ -259,8 +259,8 @@ const EconomyDashboard = () => {
                                             ))}
                                         </tbody>
                                     </table>
-                                </div>
-                            </div>
+                        </div>
+                        </div>
                         </Fade>
 
                     </div>
@@ -275,11 +275,11 @@ const EconomyDashboard = () => {
                                  <div className="h-96">
                                     <Line data={gdpGrowthTrendsData} options={{ maintainAspectRatio: false }} />
                                 </div>
-                            </div>
+            </div>
                         </Fade>
                          {/* Unemployment Rate Line Chart */}
                         <Fade direction="up" triggerOnce delay={100}>
-                             <div className="bg-white dark:bg-dark-card rounded-lg shadow-sm p-6">
+                <div className="bg-white dark:bg-dark-card rounded-lg shadow-sm p-6">
                                 <h2 className="text-xl font-semibold dark:text-white mb-4">Unemployment Rate (%)</h2>
                                  <div className="h-96">
                                     <Line data={unemploymentRateData} options={{ maintainAspectRatio: false }} />
@@ -353,7 +353,7 @@ const EconomyDashboard = () => {
                         <button className={`inline-block p-4 border-b-2 rounded-t-lg ${activeTab === 'Indicators' ? 'border-primary-600 text-primary-600 dark:border-primary-400 dark:text-primary-400' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'}`} id="indicators-tab" data-tabs-target="#indicators" type="button" role="tab" aria-controls="indicators" aria-selected={activeTab === 'Indicators'} onClick={() => setActiveTab('Indicators')}>Indicators</button>
                     </li>
                 </ul>
-            </div>
+                </div>
 
             <div>
                 {renderContent()}

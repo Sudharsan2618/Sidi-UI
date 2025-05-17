@@ -98,7 +98,7 @@ const InvestmentDashboard = () => {
     const renderContent = () => {
         switch (activeTab) {
             case 'Overview':
-                return (
+    return (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         {/* Portfolio Performance Line Chart */}
                         <Fade direction="up" triggerOnce>
@@ -211,8 +211,8 @@ const InvestmentDashboard = () => {
                                 <h2 className="text-lg font-semibold mb-4 dark:text-white">Opportunity Scores by Sector</h2>
                                  <div className="h-72">
                                      <Bar data={sectorOpportunityData} options={{ maintainAspectRatio: false }} />
-                                 </div>
-                            </div>
+                        </div>
+                        </div>
                         </Fade>
                     </div>
                 );

@@ -47,7 +47,7 @@ const ChatUI = () => {
                 <button
                     onClick={() => setIsOpen(true)}
                     className="fixed bottom-6 right-6 p-4 bg-primary-500 text-white rounded-full shadow-lg hover:bg-primary-600 
-                    transition-all duration-200 z-50 hover:scale-110"
+                    transition-all duration-200 z-50 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50"
                     aria-label="Open chat"
                 >
                     <MessageSquare size={24} />
@@ -58,19 +58,19 @@ const ChatUI = () => {
             {isOpen && (
                 <div
                     className={`fixed transition-all duration-300 z-50 bg-white dark:bg-dark-card 
-                    shadow-lg border border-neutral-200 dark:border-dark-border flex flex-col
+                    shadow-xl border border-gray-200 dark:border-gray-700 rounded-lg flex flex-col
                     ${isFullscreen
                             ? 'inset-0 rounded-none'
-                            : 'bottom-6 right-6 w-96 h-[80vh] rounded-lg'
+                            : 'bottom-6 right-6 w-96 h-[80vh]'
                         }`}
                 >
                     {/* Header */}
-                    <div className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-dark-border">
-                        <h3 className="font-semibold text-neutral-800 dark:text-neutral-200">AI Assistant</h3>
+                    <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-dark-background rounded-t-lg">
+                        <h3 className="font-semibold text-gray-800 dark:text-gray-200">AI Assistant</h3>
                         <div className="flex items-center space-x-2">
                             <button
                                 onClick={() => setIsFullscreen(!isFullscreen)}
-                                className="p-1 text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400"
+                                className="p-1 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
                                 aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
                             >
                                 {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
@@ -80,7 +80,7 @@ const ChatUI = () => {
                                     setIsOpen(false);
                                     setIsFullscreen(false);
                                 }}
-                                className="p-1 text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400"
+                                className="p-1 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
                                 aria-label="Close chat"
                             >
                                 <X size={16} />
@@ -97,8 +97,8 @@ const ChatUI = () => {
                             >
                                 <div
                                     className={`max-w-[80%] p-3 rounded-lg ${message.sender === 'user'
-                                        ? 'bg-primary-500 text-white'
-                                        : 'bg-neutral-100 dark:bg-dark-hover text-neutral-800 dark:text-neutral-200'
+                                        ? 'bg-primary-500 text-white rounded-br-none'
+                                        : 'bg-gray-100 dark:bg-dark-hover text-gray-800 dark:text-gray-200 rounded-bl-none'
                                         }`}
                                 >
                                     <p className="text-sm">{message.text}</p>
@@ -112,21 +112,22 @@ const ChatUI = () => {
                     </div>
 
                     {/* Input */}
-                    <form onSubmit={handleSubmit} className="p-4 border-t border-neutral-200 dark:border-dark-border">
+                    <form onSubmit={handleSubmit} className="p-4 border-t border-gray-200 dark:border-gray-700">
                         <div className="flex items-center space-x-2">
                             <input
                                 type="text"
                                 value={inputMessage}
                                 onChange={(e) => setInputMessage(e.target.value)}
                                 placeholder="Type your message..."
-                                className="flex-1 p-2 rounded-lg border border-neutral-200 dark:border-dark-border 
-                                bg-white dark:bg-dark-card text-neutral-800 dark:text-neutral-200 
-                                focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                className="flex-1 p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 
+                                bg-gray-50 dark:bg-dark-background text-gray-800 dark:text-gray-200 
+                                focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400"
                             />
                             <button
                                 type="submit"
-                                className="p-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 
-                                transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="p-2.5 bg-primary-500 text-white rounded-lg hover:bg-primary-600 
+                                transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed
+                                focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50"
                                 disabled={!inputMessage.trim()}
                             >
                                 <Send size={20} />
