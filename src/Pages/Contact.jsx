@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import emailjs from 'emailjs-com';
+import { toast } from 'react-toastify';
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -19,8 +21,27 @@ const Contact = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle form submission here
-        console.log("Form submitted:", formData);
+        
+        emailjs.send(
+            'service_23tp64l', // Replace with your Service ID
+            'template_hn02cvo', // Replace with your Template ID
+            formData,
+            'XjdEBQzJjyLoTNLSx' // Replace with your User ID
+        )
+        .then((result) => {
+            console.log('Email successfully sent!', result.text);
+            toast.success('Message Sent Successfully!');
+        }, (error) => {
+            console.error('Failed to send email:', error.text);
+            toast.error('Failed to send message. Please try again.');
+        });
+
+        setFormData({
+            name: '',
+            email: '',
+            subject: '',
+            message: ''
+        });
     };
 
     return (
@@ -32,17 +53,17 @@ const Contact = () => {
                     <div className="bg-white rounded-lg shadow-lg p-6">
                         <Mail className="h-6 w-6 text-primary-600 mb-4" />
                         <h3 className="text-lg font-semibold text-gray-900 mb-2">Email</h3>
-                        <p className="text-gray-700">support@sidi.com</p>
+                        <p className="text-gray-700 dark:text-gray-300">admin@tatti.in</p>
                     </div>
                     <div className="bg-white rounded-lg shadow-lg p-6">
                         <Phone className="h-6 w-6 text-primary-600 mb-4" />
                         <h3 className="text-lg font-semibold text-gray-900 mb-2">Phone</h3>
-                        <p className="text-gray-700">+1 (555) 123-4567</p>
+                        <p className="text-gray-700 dark:text-gray-300">9884170589</p>
                     </div>
                     <div className="bg-white rounded-lg shadow-lg p-6">
                         <MapPin className="h-6 w-6 text-primary-600 mb-4" />
                         <h3 className="text-lg font-semibold text-gray-900 mb-2">Address</h3>
-                        <p className="text-gray-700">123 Business Street, Suite 100, City, State 12345</p>
+                        <p className="text-gray-700 dark:text-gray-300">42/25, Gee Gee Complex, Anna Salai, Mount Road, Triplicane, Chennai, Tamil Nadu 600002</p>
                     </div>
                 </div>
 

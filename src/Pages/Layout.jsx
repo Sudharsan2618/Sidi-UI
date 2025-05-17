@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from '../Components/Header';
 import Sidebar from '../Components/Sidebar';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Layout = () => {
     const location = useLocation();
@@ -32,6 +34,7 @@ const Layout = () => {
                     </div>
                 </main>
             </div>
+            <ToastContainer />
         </div>
     );
 };
